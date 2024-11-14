@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.TransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
@@ -19,6 +20,7 @@ import javax.sql.DataSource;
 @ComponentScan("org.example")
 @EnableJpaRepositories("org.example.repository")
 @PropertySource("classpath:application.properties")
+@EnableTransactionManagement
 public class RootConfig {
 
     @Value("${spring.datasourse.url}")
@@ -37,6 +39,7 @@ public class RootConfig {
         emf.setDataSource(dataSource());
         emf.setPersistenceProviderClass(HibernatePersistenceProvider.class);
         emf.setPackagesToScan("org.example.entity");
+        emf.getJpaPropertyMap().put("hibernate.show_sql", true);
         return emf;
     }
 
